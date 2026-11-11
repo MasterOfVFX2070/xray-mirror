@@ -10,8 +10,8 @@
   * { box-sizing:border-box; }
   html,body { margin:0; min-height:100%; background:var(--bg); color:var(--fg);
               font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
-  .wrap { display:flex; gap:20px; padding:20px; justify-content:center; align-items:flex-start; }
-  .stagecol { flex:1 1 auto; min-width:0; display:flex; justify-content:center; }
+  .wrap { display:flex; gap:20px; padding:20px; justify-content:center; align-items:flex-start; position: relative; }
+  .stagecol { flex:1 1 auto; min-width:0; display:flex; justify-content:center; position:sticky; top:20px; }
   .stage { position:relative; width:min(100%, calc((100vh - 40px) * var(--ar, 1.3333))); aspect-ratio:var(--ar, 1.3333);
            background:radial-gradient(ellipse at 50% 40%, #131a2b, #05070c 75%); border:1px solid var(--line);
            border-radius:16px; overflow:hidden; }
