@@ -55,6 +55,9 @@
   details[open] summary { margin-bottom:10px; }
   .small { font-size:12px; color:var(--dim); margin:0; }
   .linkbtn { font:inherit; font-size:12px; color:var(--accent); background:none; border:0; padding:0; cursor:pointer; margin-top:10px; }
+  .titlerow { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+  .langseg { flex:none; }
+  .langseg button { flex:none; font-size:12px; padding:6px 10px; }
   [hidden] { display:none !important; }
   @media (max-width:900px) { .wrap { flex-direction:column; align-items:stretch; } aside { flex:none; } .stage { width:100%; } }
 </style>
@@ -68,85 +71,91 @@
       <canvas id="gl"></canvas>
       <canvas id="hud"></canvas>
       <div id="intro">
-        <h2>X-RAY MIRROR</h2>
-        <p>See the skull, brain and muscles inside your own head, tracked live through your camera. Hold a hand up to see its bones.</p>
-        <button class="big" id="start">Start camera</button>
+        <h2 data-i18n="intro.h2">X-RAY MIRROR</h2>
+        <p data-i18n="intro.p">See the skull, brain and muscles inside your own head, tracked live through your camera. Hold a hand up to see its bones.</p>
+        <button class="big" id="start" data-i18n="intro.start">Start camera</button>
       </div>
     </div>
   </div>
 
   <aside>
-    <h1>X-Ray Mirror</h1>
-    <div class="panel"><div id="status">Click Start camera, then allow the camera.</div></div>
+    <div class="titlerow">
+      <h1 data-i18n="title">X-Ray Mirror</h1>
+      <div class="seg langseg" id="langseg">
+        <button data-lang="en">English</button>
+        <button data-lang="zh">中文</button>
+      </div>
+    </div>
+    <div class="panel"><div id="status" data-i18n="st.intro">Click Start camera, then allow the camera.</div></div>
 
     <div class="panel">
-      <h3>Layers</h3>
+      <h3 data-i18n="panel.layers">Layers</h3>
       <div class="chips">
-        <button data-preset="skull">Skull</button>
-        <button data-preset="brain">Brain</button>
-        <button data-preset="muscles">Muscles</button>
-        <button data-preset="all">Everything</button>
+        <button data-preset="skull" data-i18n="preset.skull">Skull</button>
+        <button data-preset="brain" data-i18n="preset.brain">Brain</button>
+        <button data-preset="muscles" data-i18n="preset.muscles">Muscles</button>
+        <button data-preset="all" data-i18n="preset.all">Everything</button>
       </div>
       <div class="checks">
-        <label class="ck"><input type="checkbox" id="L_skull"><i style="background:#bfe3ff"></i>Skull</label>
-        <label class="ck"><input type="checkbox" id="L_brain"><i style="background:#ff9fc0"></i>Brain</label>
-        <label class="ck"><input type="checkbox" id="L_muscles"><i style="background:#ff6b5e"></i>Muscles</label>
-        <label class="ck"><input type="checkbox" id="L_eyes"><i style="background:#fff3a8"></i>Eyes</label>
-        <label class="ck"><input type="checkbox" id="L_outline"><i style="background:#6fb6ff"></i>Head outline</label>
-        <label class="ck"><input type="checkbox" id="L_hands"><i style="background:#d9f0ff"></i>Hand bones</label>
+        <label class="ck"><input type="checkbox" id="L_skull"><i style="background:#bfe3ff"></i><span data-i18n="ly.skull">Skull</span></label>
+        <label class="ck"><input type="checkbox" id="L_brain"><i style="background:#ff9fc0"></i><span data-i18n="ly.brain">Brain</span></label>
+        <label class="ck"><input type="checkbox" id="L_muscles"><i style="background:#ff6b5e"></i><span data-i18n="ly.muscles">Muscles</span></label>
+        <label class="ck"><input type="checkbox" id="L_eyes"><i style="background:#fff3a8"></i><span data-i18n="ly.eyes">Eyes</span></label>
+        <label class="ck"><input type="checkbox" id="L_outline"><i style="background:#6fb6ff"></i><span data-i18n="ly.outline">Head outline</span></label>
+        <label class="ck"><input type="checkbox" id="L_hands"><i style="background:#d9f0ff"></i><span data-i18n="ly.hands">Hand bones</span></label>
       </div>
       <div class="row" style="margin-top:13px;border-top:1px solid var(--line);padding-top:11px">
-        <label class="ck" style="font-weight:600"><input type="checkbox" id="labels">Show labels</label>
+        <label class="ck" style="font-weight:600"><input type="checkbox" id="labels"><span data-i18n="ui.labels">Show labels</span></label>
       </div>
     </div>
 
     <div class="panel">
-      <h3>Look</h3>
+      <h3 data-i18n="panel.look">Look</h3>
       <div class="seg" id="style">
-        <button data-style="xray">X-ray</button>
-        <button data-style="solid">Solid</button>
+        <button data-style="xray" data-i18n="style.xray">X-ray</button>
+        <button data-style="solid" data-i18n="style.solid">Solid</button>
       </div>
-      <div class="row"><label for="bright">Brightness</label><input id="bright" type="range" min="0.3" max="2.2" step="0.01"></div>
+      <div class="row"><label for="bright" data-i18n="look.bright">Brightness</label><input id="bright" type="range" min="0.3" max="2.2" step="0.01"></div>
     </div>
 
     <div class="panel">
-      <h3>Mixed reality</h3>
-      <div class="row"><label for="real">Real me showing through</label><input id="real" type="range" min="0" max="1" step="0.01"></div>
-      <div class="row"><label for="feather">Edge feather <b id="featherv"></b></label><input id="feather" type="range" min="0" max="1" step="0.01"></div>
+      <h3 data-i18n="panel.mr">Mixed reality</h3>
+      <div class="row"><label for="real" data-i18n="mr.real">Real me showing through</label><input id="real" type="range" min="0" max="1" step="0.01"></div>
+      <div class="row"><label for="feather"><span data-i18n="mr.feather">Edge feather</span> <b id="featherv"></b></label><input id="feather" type="range" min="0" max="1" step="0.01"></div>
       <div class="row">
-        <label for="reveal">Reveal</label>
+        <label for="reveal" data-i18n="mr.reveal">Reveal</label>
         <select id="reveal">
-          <option value="whole">Whole head</option>
-          <option value="left">Left half only</option>
-          <option value="right">Right half only</option>
-          <option value="top">Top of the head only</option>
-          <option value="bottom">Lower face only</option>
-          <option value="lens">X-ray lens (follows your fingertip)</option>
+          <option value="whole" data-i18n="rv.whole">Whole head</option>
+          <option value="left" data-i18n="rv.left">Left half only</option>
+          <option value="right" data-i18n="rv.right">Right half only</option>
+          <option value="top" data-i18n="rv.top">Top of the head only</option>
+          <option value="bottom" data-i18n="rv.bottom">Lower face only</option>
+          <option value="lens" data-i18n="rv.lens">X-ray lens (follows your fingertip)</option>
         </select>
       </div>
       <div class="row" id="cutrow"><label for="cut" id="cutlabel">Cut position</label><input id="cut" type="range" min="0" max="1" step="0.005"></div>
     </div>
 
     <div class="panel">
-      <label class="ck"><input type="checkbox" id="showdata">Show tracking data</label>
+      <label class="ck"><input type="checkbox" id="showdata"><span data-i18n="ui.showdata">Show tracking data</span></label>
       <pre id="data" hidden></pre>
     </div>
 
     <div class="panel">
-      <h3>Fit to my head</h3>
-      <div class="row"><label for="fs">Overall size <b id="fsv"></b></label><input id="fs" type="range" min="0.7" max="1.4" step="0.005"></div>
-      <div class="row"><label for="fw">Width <b id="fwv"></b></label><input id="fw" type="range" min="0.8" max="1.25" step="0.005"></div>
-      <div class="row"><label for="fh">Height <b id="fhv"></b></label><input id="fh" type="range" min="0.8" max="1.25" step="0.005"></div>
-      <div class="row"><label for="fd">Depth <b id="fdv"></b></label><input id="fd" type="range" min="0.8" max="1.25" step="0.005"></div>
-      <div class="row"><label for="fx">Left / right <b id="fxv"></b></label><input id="fx" type="range" min="-3" max="3" step="0.1"></div>
-      <div class="row"><label for="fy">Up / down <b id="fyv"></b></label><input id="fy" type="range" min="-4" max="4" step="0.1"></div>
-      <div class="row"><label for="fz">Forward / back <b id="fzv"></b></label><input id="fz" type="range" min="-4" max="4" step="0.1"></div>
-      <button class="linkbtn" id="fitreset" type="button">Reset fit</button>
-      <p class="small" style="margin-top:8px">Tip: pick the Solid look and set "Real me showing through" to about half, then line the skull up with your face.</p>
+      <h3 data-i18n="panel.fit">Fit to my head</h3>
+      <div class="row"><label for="fs"><span data-i18n="fit.size">Overall size</span> <b id="fsv"></b></label><input id="fs" type="range" min="0.7" max="1.4" step="0.005"></div>
+      <div class="row"><label for="fw"><span data-i18n="fit.w">Width</span> <b id="fwv"></b></label><input id="fw" type="range" min="0.8" max="1.25" step="0.005"></div>
+      <div class="row"><label for="fh"><span data-i18n="fit.h">Height</span> <b id="fhv"></b></label><input id="fh" type="range" min="0.8" max="1.25" step="0.005"></div>
+      <div class="row"><label for="fd"><span data-i18n="fit.d">Depth</span> <b id="fdv"></b></label><input id="fd" type="range" min="0.8" max="1.25" step="0.005"></div>
+      <div class="row"><label for="fx"><span data-i18n="fit.x">Left / right</span> <b id="fxv"></b></label><input id="fx" type="range" min="-3" max="3" step="0.1"></div>
+      <div class="row"><label for="fy"><span data-i18n="fit.y">Up / down</span> <b id="fyv"></b></label><input id="fy" type="range" min="-4" max="4" step="0.1"></div>
+      <div class="row"><label for="fz"><span data-i18n="fit.z">Forward / back</span> <b id="fzv"></b></label><input id="fz" type="range" min="-4" max="4" step="0.1"></div>
+      <button class="linkbtn" id="fitreset" type="button" data-i18n="fit.reset">Reset fit</button>
+      <p class="small" style="margin-top:8px" data-i18n="fit.tip">Tip: pick the Solid look and set "Real me showing through" to about half, then line the skull up with your face.</p>
     </div>
 
-    <p class="small">The anatomy is a real 3D dataset of one adult, scaled and pinned to your head. It shows where structures typically sit, not a scan of you, and it is not a medical tool. Video is processed on this computer and never uploaded.</p>
-    <p class="small">Anatomy models: BodyParts3D, © The Database Center for Life Science, licensed under CC Attribution-Share Alike 2.1 Japan. Models were simplified and re-aligned.</p>
+    <p class="small" data-i18n="foot.anatomy">The anatomy is a real 3D dataset of one adult, scaled and pinned to your head. It shows where structures typically sit, not a scan of you, and it is not a medical tool. Video is processed on this computer and never uploaded.</p>
+    <p class="small" data-i18n="foot.credit">Anatomy models: BodyParts3D, © The Database Center for Life Science, licensed under CC Attribution-Share Alike 2.1 Japan. Models were simplified and re-aligned.</p>
   </aside>
 </div>
 
@@ -156,7 +165,11 @@
 <script type="module">
 const $ = id => document.getElementById(id);
 const statusEl = $("status"), video = $("video"), stage = $("stage");
-function setStatus(text, cls) { statusEl.textContent = text; statusEl.className = cls || ""; }
+let statusInfo = null;                              // last status, so switching language can re-render it
+function setStatus(key, vars, cls) {
+  statusInfo = { key, vars, cls };
+  statusEl.textContent = fmt(t(key), vars); statusEl.className = cls || "";
+}
 const DEMO = location.hash === "#demo";            // built-in test scene, no camera needed
 const THREE_URL = "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 const MP = "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14";
@@ -168,10 +181,130 @@ const META = JSON.parse($("meshmeta").textContent);
 // ------------------------------ settings ------------------------------
 const DEFAULTS = { skull: true, brain: false, muscles: false, eyes: true, outline: true, hands: true,
                    style: "xray", bright: 1, real: 0.12, feather: 0.2, reveal: "whole", cut: 0.5, showdata: false,
-                   fs: 1, fw: 1, fh: 1, fd: 1, fx: 0, fy: 0, fz: 0, labels: false };
+                   fs: 1, fw: 1, fh: 1, fd: 1, fx: 0, fy: 0, fz: 0, labels: false,
+                   lang: (navigator.languages || [navigator.language || "en"]).some(l => /^zh/i.test(l || "")) ? "zh" : "en" };
 let S = Object.assign({}, DEFAULTS);
 try { Object.assign(S, JSON.parse(localStorage.getItem("xr_settings") || "{}")); } catch (e) {}
+{ const urlLang = new URLSearchParams(location.search).get("lang");   // ?lang=zh / ?lang=en overrides everything
+  if (urlLang === "zh" || urlLang === "en") S.lang = urlLang; }
 function save() { try { localStorage.setItem("xr_settings", JSON.stringify(S)); } catch (e) {} }
+
+// ------------------------------ text / translations ------------------------------
+const I18N = {
+  en: {
+    "title": "X-Ray Mirror",
+    "intro.h2": "X-RAY MIRROR",
+    "intro.p": "See the skull, brain and muscles inside your own head, tracked live through your camera. Hold a hand up to see its bones.",
+    "intro.start": "Start camera",
+    "panel.layers": "Layers", "panel.look": "Look", "panel.mr": "Mixed reality", "panel.fit": "Fit to my head",
+    "preset.skull": "Skull", "preset.brain": "Brain", "preset.muscles": "Muscles", "preset.all": "Everything",
+    "ly.skull": "Skull", "ly.brain": "Brain", "ly.muscles": "Muscles", "ly.eyes": "Eyes",
+    "ly.outline": "Head outline", "ly.hands": "Hand bones",
+    "ui.labels": "Show labels", "ui.showdata": "Show tracking data",
+    "style.xray": "X-ray", "style.solid": "Solid", "look.bright": "Brightness",
+    "mr.real": "Real me showing through", "mr.feather": "Edge feather", "mr.reveal": "Reveal",
+    "rv.whole": "Whole head", "rv.left": "Left half only", "rv.right": "Right half only",
+    "rv.top": "Top of the head only", "rv.bottom": "Lower face only",
+    "rv.lens": "X-ray lens (follows your fingertip)", "rv.cut": "Cut position", "rv.lensSize": "Lens size",
+    "fit.size": "Overall size", "fit.w": "Width", "fit.h": "Height", "fit.d": "Depth",
+    "fit.x": "Left / right", "fit.y": "Up / down", "fit.z": "Forward / back",
+    "fit.reset": "Reset fit",
+    "fit.tip": "Tip: pick the Solid look and set \"Real me showing through\" to about half, then line the skull up with your face.",
+    "foot.anatomy": "The anatomy is a real 3D dataset of one adult, scaled and pinned to your head. It shows where structures typically sit, not a scan of you, and it is not a medical tool. Video is processed on this computer and never uploaded.",
+    "foot.credit": "Anatomy models: BodyParts3d, © The Database Center for Life Science, licensed under CC Attribution-Share Alike 2.1 Japan. Models were simplified and re-aligned.",
+    "st.intro": "Click Start camera, then allow the camera.",
+    "st.ask": "Asking for the camera…",
+    "st.anatomy": "Loading the 3D anatomy…",
+    "st.trackers": "Loading the face and hand trackers (first time takes a few seconds)…",
+    "st.denied": "Camera blocked. Allow camera access for this page and click Start again.",
+    "st.loadFail": "Could not load the {stage}: {msg}",
+    "st.noCam": "this browser will not give this page a camera. Try Chrome or Edge.",
+    "st.err": "The tracker hit an error: {msg}",
+    "st.headHands": "Tracking your head. Hand bones on.",
+    "st.head": "Tracking your head.",
+    "st.handOnly": "Hand found. Face the camera to see inside your head.",
+    "st.noFace": "No face found. Face the camera, with light on your face.",
+    "st.demo": "Demo scene (no camera).",
+    "st.demoFail": "Demo failed: {msg}",
+    "stage.camera": "camera", "stage.engine": "3D engine", "stage.trackers": "trackers",
+    "hand.distal": "Distal phalanx", "hand.middle": "Middle phalanx", "hand.proximal": "Proximal phalanx",
+    "hand.metacarpal": "Metacarpal", "hand.carpal": "Carpal bones (wrist)",
+    "dt.face": "face", "dt.tracked": "tracked, {n} points", "dt.notFound": "not found",
+    "dt.distance": "distance", "dt.cm": "{v} cm (estimate)",
+    "dt.pose": "turn / nod / tilt", "dt.jaw": "jaw open",
+    "dt.fit": "screen fit", "dt.fitv": "scale {s}, shift {x}, {y}",
+    "dt.hands": "hands", "dt.right": "right", "dt.left": "left", "dt.none": "none",
+    "dt.fingertip": "index fingertip", "dt.layers": "layers",
+    "dt.speed": "speed", "dt.fps": "{n} frames/s"
+  },
+  zh: {
+    "title": "X 光镜子",
+    "intro.h2": "X 光镜子",
+    "intro.p": "通过摄像头实时追踪，看看你自己头颅里的颅骨、大脑和肌肉。举起手，还能看到手部骨骼。",
+    "intro.start": "开启摄像头",
+    "panel.layers": "图层", "panel.look": "外观", "panel.mr": "混合现实", "panel.fit": "贴合我的头部",
+    "preset.skull": "颅骨", "preset.brain": "大脑", "preset.muscles": "肌肉", "preset.all": "全部",
+    "ly.skull": "颅骨", "ly.brain": "大脑", "ly.muscles": "肌肉", "ly.eyes": "眼球",
+    "ly.outline": "头部轮廓", "ly.hands": "手部骨骼",
+    "ui.labels": "显示标注", "ui.showdata": "显示追踪数据",
+    "style.xray": "X 光", "style.solid": "实体", "look.bright": "亮度",
+    "mr.real": "真实画面透出", "mr.feather": "边缘羽化", "mr.reveal": "显示区域",
+    "rv.whole": "整个头部", "rv.left": "仅左半边", "rv.right": "仅右半边",
+    "rv.top": "仅头顶部分", "rv.bottom": "仅下半面部",
+    "rv.lens": "X 光透镜（跟随指尖）", "rv.cut": "切割位置", "rv.lensSize": "透镜大小",
+    "fit.size": "整体大小", "fit.w": "宽度", "fit.h": "高度", "fit.d": "深度",
+    "fit.x": "左右", "fit.y": "上下", "fit.z": "前后",
+    "fit.reset": "重置贴合",
+    "fit.tip": "提示：选择「实体」外观，把「真实画面透出」调到一半左右，再让颅骨与你的脸对齐。",
+    "foot.anatomy": "这里的解剖结构来自一位真实成年人的 3D 数据集，经缩放后对齐到你的头部。它展示的是各结构通常所在的位置，并不是对你的扫描，也不是医疗工具。视频只在这台电脑上处理，绝不会上传。",
+    "foot.credit": "解剖模型：BodyParts3d，© The Database Center for Life Science（生命科学数据库中心），采用 CC 署名-相同方式共享 2.1 日本 许可协议。模型经过简化并重新对齐。",
+    "st.intro": "点击「开启摄像头」，然后允许使用摄像头。",
+    "st.ask": "正在请求摄像头权限…",
+    "st.anatomy": "正在加载 3D 解剖模型…",
+    "st.trackers": "正在加载人脸和手部追踪器（首次需要几秒钟）…",
+    "st.denied": "摄像头被阻止。请允许本页面使用摄像头，然后重新点击开始。",
+    "st.loadFail": "无法加载{stage}：{msg}",
+    "st.noCam": "此浏览器无法向本页面提供摄像头。请尝试 Chrome 或 Edge。",
+    "st.err": "追踪器出错：{msg}",
+    "st.headHands": "正在追踪你的头部。手部骨骼已开启。",
+    "st.head": "正在追踪你的头部。",
+    "st.handOnly": "检测到手部。请面向摄像头，看看你的头部内部。",
+    "st.noFace": "未检测到人脸。请面向摄像头，并让光线照在脸上。",
+    "st.demo": "演示场景（无需摄像头）。",
+    "st.demoFail": "演示失败：{msg}",
+    "stage.camera": "摄像头", "stage.engine": "3D 引擎", "stage.trackers": "追踪器",
+    "hand.distal": "远节指骨", "hand.middle": "中节指骨", "hand.proximal": "近节指骨",
+    "hand.metacarpal": "掌骨", "hand.carpal": "腕骨（手腕）",
+    "dt.face": "人脸", "dt.tracked": "已追踪，{n} 个点", "dt.notFound": "未检测到",
+    "dt.distance": "距离", "dt.cm": "{v} 厘米（估计值）",
+    "dt.pose": "转头 / 点头 / 歪头", "dt.jaw": "张嘴幅度",
+    "dt.fit": "屏幕贴合", "dt.fitv": "缩放 {s}，偏移 {x}、{y}",
+    "dt.hands": "手部", "dt.right": "右手", "dt.left": "左手", "dt.none": "无",
+    "dt.fingertip": "食指指尖", "dt.layers": "图层",
+    "dt.speed": "速度", "dt.fps": "{n} 帧/秒"
+  }
+};
+// canvas anatomy labels: the mesh data carries English names, translate them for zh
+const LABEL_ZH = {
+  "Frontal bone": "额骨", "Parietal bone": "顶骨", "Temporal bone": "颞骨", "Occipital bone": "枕骨",
+  "Nasal bone": "鼻骨", "Zygomatic bone (cheekbone)": "颧骨", "Maxilla (upper jaw)": "上颌骨",
+  "Teeth": "牙齿", "Mandible (lower jaw)": "下颌骨", "Eyeball": "眼球",
+  "Frontal lobe": "额叶", "Parietal lobe": "顶叶", "Temporal lobe": "颞叶", "Occipital lobe": "枕叶",
+  "Cerebellum": "小脑", "Pons (brainstem)": "脑桥（脑干）", "Medulla oblongata": "延髓",
+  "Frontalis": "额肌", "Temporalis": "颞肌", "Orbicularis oculi": "眼轮匝肌", "Nasalis": "鼻肌",
+  "Zygomaticus major": "颧大肌", "Masseter": "咬肌", "Orbicularis oris": "口轮匝肌",
+  "Depressor anguli oris": "降口角肌", "Mentalis": "颏肌"
+};
+function t(key) { return (I18N[S.lang] && I18N[S.lang][key]) || I18N.en[key] || key; }
+function tl(text) { return S.lang === "zh" ? (LABEL_ZH[text] || text) : text; }
+function fmt(s, vars) { return s.replace(/\{(\w+)\}/g, (m, n) => vars && vars[n] !== undefined ? vars[n] : m); }
+function applyI18n() {
+  document.documentElement.lang = S.lang;
+  document.title = t("title");
+  for (const el of document.querySelectorAll("[data-i18n]")) el.textContent = t(el.dataset.i18n);
+  for (const b of $("langseg").children) b.classList.toggle("on", b.dataset.lang === S.lang);
+  if (statusInfo) setStatus(statusInfo.key, statusInfo.vars, statusInfo.cls);
+}
 const LAYERS = ["skull", "brain", "muscles", "eyes", "outline", "hands"];
 const SLIDERS = ["bright", "real", "feather", "cut", "fs", "fw", "fh", "fd", "fx", "fy", "fz"];
 
@@ -185,7 +318,7 @@ function syncUI() {
   $("labels").checked = S.labels;
   $("reveal").value = S.reveal; $("showdata").checked = S.showdata; $("data").hidden = !S.showdata;
   $("cutrow").hidden = S.reveal === "whole";
-  $("cutlabel").textContent = S.reveal === "lens" ? "Lens size" : "Cut position";
+  $("cutlabel").textContent = t(S.reveal === "lens" ? "rv.lensSize" : "rv.cut");
 }
 for (const k of LAYERS) $("L_" + k).onchange = e => { S[k] = e.target.checked; save(); };
 for (const b of $("style").children) b.onclick = () => { S.style = b.dataset.style; save(); syncUI(); applyStyle(); };
@@ -200,7 +333,9 @@ for (const b of document.querySelectorAll("[data-preset]")) b.onclick = () => {
   S.muscles = p === "muscles" || p === "all"; S.eyes = p !== "brain"; S.outline = true;
   save(); syncUI();
 };
+for (const b of $("langseg").children) b.onclick = () => { S.lang = b.dataset.lang; save(); applyI18n(); syncUI(); };
 syncUI();
+applyI18n();
 
 // ------------------------------ 3D scene ------------------------------
 let THREE, renderer, headScene, handScene, cam, ortho, headGroup, jawPivot, baseProj;
@@ -504,7 +639,7 @@ function collectHeadLabels(lens) {
       if (solid && facing < 0.12) continue;                                                // on the far side
       const s = toScreen(lp);
       if (lens && Math.hypot(s.x - lens.x, s.y - lens.y) > lens.r) continue;
-      if (!best || facing > best.facing) best = { text: L.t, color: LABEL_COLOR[L.layer], ax: s.x, ay: s.y, facing };
+      if (!best || facing > best.facing) best = { text: tl(L.t), color: LABEL_COLOR[L.layer], ax: s.x, ay: s.y, facing };
     }
     if (best) out.push(best);
   }
@@ -570,8 +705,8 @@ function drawLabels(g, lens) {
   if (S.hands) handRigs.forEach((rig, i) => {
     if (!rig.group.visible || !rig.pts) return;
     const P = rig.pts, at = (a, b, k) => ({ ax: W - (P[a].x + (P[b].x - P[a].x) * k), ay: H - (P[a].y + (P[b].y - P[a].y) * k) });
-    const items = [["Distal phalanx", 11, 12, 0.5], ["Middle phalanx", 10, 11, 0.5], ["Proximal phalanx", 9, 10, 0.5],
-                   ["Metacarpal", 0, 9, 0.62], ["Carpal bones (wrist)", 0, 9, 0.1]]
+    const items = [[t("hand.distal"), 11, 12, 0.5], [t("hand.middle"), 10, 11, 0.5], [t("hand.proximal"), 9, 10, 0.5],
+                   [t("hand.metacarpal"), 0, 9, 0.62], [t("hand.carpal"), 0, 9, 0.1]]
       .map(([text, a, b, k]) => Object.assign({ text, color: LABEL_COLOR.hands }, at(a, b, k)))
       .filter(it => !lens || Math.hypot(it.ax - lens.x, it.ay - lens.y) <= lens.r);
     let lo = 1e9, hi = -1e9; for (const p of P) { lo = Math.min(lo, W - p.x); hi = Math.max(hi, W - p.x); }
@@ -638,15 +773,16 @@ function renderFrame(now, faceLms, hands, sides) {
       const pad = k => (k + "                  ").slice(0, 18), rows = [];
       if (head.found) {
         const eu = new THREE.Euler().setFromQuaternion(head.quat, "YXZ"), deg = r => (r * 57.2958).toFixed(0) + "°";
-        rows.push(["face", "tracked, " + (faceLms ? faceLms.length : 0) + " points"],
-                  ["distance", (-head.pos.z).toFixed(0) + " cm (estimate)"],
-                  ["turn / nod / tilt", deg(eu.y) + " / " + deg(eu.x) + " / " + deg(eu.z)],
-                  ["jaw open", head.jaw.toFixed(2)],
-                  ["screen fit", "scale " + head.fitS.toFixed(3) + ", shift " + head.fitX.toFixed(3) + ", " + head.fitY.toFixed(3)]);
-      } else rows.push(["face", "not found"]);
-      rows.push(["hands", hands.length ? hands.map((h, i) => sides[i] ? "right" : "left").join(" + ") : "none"]);
-      if (hands[0]) rows.push(["index fingertip", (1 - hands[0][8].x).toFixed(2) + ", " + hands[0][8].y.toFixed(2)]);
-      rows.push(["layers", LAYERS.filter(k => S[k]).join(", ") || "none"], ["speed", fps + " frames/s"]);
+        rows.push([t("dt.face"), fmt(t("dt.tracked"), { n: faceLms ? faceLms.length : 0 })],
+                  [t("dt.distance"), fmt(t("dt.cm"), { v: (-head.pos.z).toFixed(0) })],
+                  [t("dt.pose"), deg(eu.y) + " / " + deg(eu.x) + " / " + deg(eu.z)],
+                  [t("dt.jaw"), head.jaw.toFixed(2)],
+                  [t("dt.fit"), fmt(t("dt.fitv"), { s: head.fitS.toFixed(3), x: head.fitX.toFixed(3), y: head.fitY.toFixed(3) })]);
+      } else rows.push([t("dt.face"), t("dt.notFound")]);
+      rows.push([t("dt.hands"), hands.length ? hands.map((h, i) => t(sides[i] ? "dt.right" : "dt.left")).join(" + ") : t("dt.none")]);
+      if (hands[0]) rows.push([t("dt.fingertip"), (1 - hands[0][8].x).toFixed(2) + ", " + hands[0][8].y.toFixed(2)]);
+      rows.push([t("dt.layers"), LAYERS.filter(k => S[k]).map(k => t("ly." + k)).join(", ") || t("dt.none")],
+                [t("dt.speed"), fmt(t("dt.fps"), { n: fps })]);
       $("data").textContent = rows.map(r => pad(r[0]) + r[1]).join("\n");
     }
   }
@@ -670,7 +806,8 @@ async function loadTrackers() {
 
 function liveLoop() {
   let lastTime = -1, lostAt = 0, said = "";
-  const say = (t, c) => { if (said !== t) { said = t; setStatus(t, c); } };
+  const say = (key, vars, c) => { const id = key + "|" + (vars ? JSON.stringify(vars) : "");   // t() is the translate fn; keep keys, not text
+                                  if (said !== id) { said = id; setStatus(key, vars, c); } };
   function tick() {
     requestAnimationFrame(tick);
     if (video.readyState < 2 || video.currentTime === lastTime) return;
@@ -694,10 +831,9 @@ function liveLoop() {
         // The tracker names hands as if the picture were mirrored; ours is not, so the names are swapped.
         sides = hands.map((h, i) => !!(hd[i] && hd[i][0] && hd[i][0].categoryName === "Left"));
       }
-    } catch (e) { say("The tracker hit an error: " + e.message, "bad"); return; }
-    say(head.found ? "Tracking your head." + (hands.length ? " Hand bones on." : "")
-                   : hands.length ? "Hand found. Face the camera to see inside your head."
-                   : "No face found. Face the camera, with light on your face.", head.found || hands.length ? "ok" : "bad");
+    } catch (e) { say("st.err", { msg: e.message }, "bad"); return; }
+    say(head.found ? (hands.length ? "st.headHands" : "st.head")
+                   : hands.length ? "st.handOnly" : "st.noFace", null, head.found || hands.length ? "ok" : "bad");
     renderFrame(now, faceLms, hands, sides);
   }
   tick();
@@ -706,7 +842,7 @@ function liveLoop() {
 // Built-in test scene (open the page with #demo): a pretend head and the dataset's own hand, no camera.
 function demoLoop() {
   $("intro").hidden = true;
-  setStatus("Demo scene (no camera).", "ok");
+  setStatus("st.demo", null, "ok");
   const params = new URLSearchParams(location.search), still = params.has("still");
   const base = META.demoHand, cx = base[9][0], cy = base[9][1], cz = base[9][2];
   function tick() {
@@ -742,22 +878,22 @@ async function boot() {
 
 $("start").onclick = async () => {
   $("start").disabled = true;
-  let stageName = "camera";
+  let stageName = "stage.camera";
   try {
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia)
-      throw new Error("this browser will not give this page a camera. Try Chrome or Edge.");
-    setStatus("Asking for the camera…");
+      throw Object.assign(new Error("no camera"), { i18nKey: "st.noCam" });
+    setStatus("st.ask");
     const stream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: "user", width: { ideal: 1280 }, height: { ideal: 720 } }, audio: false });
     video.srcObject = stream;
     await video.play();
     if (video.videoWidth && video.videoHeight) stage.style.setProperty("--ar", (video.videoWidth / video.videoHeight).toFixed(4));
     $("intro").hidden = true;
-    stageName = "3D engine";
-    setStatus("Loading the 3D anatomy…");
+    stageName = "stage.engine";
+    setStatus("st.anatomy");
     await boot();
-    stageName = "trackers";
-    setStatus("Loading the face and hand trackers (first time takes a few seconds)…");
+    stageName = "stage.trackers";
+    setStatus("st.trackers");
     await loadTrackers();
     if (!handTracker) $("L_hands").disabled = true;
     resize();
@@ -765,13 +901,12 @@ $("start").onclick = async () => {
   } catch (err) {
     $("start").disabled = false; $("intro").hidden = false;
     const denied = err && (err.name === "NotAllowedError" || err.name === "SecurityError");
-    const msg = err && err.message ? err.message : String(err);
-    setStatus(denied ? "Camera blocked. Allow camera access for this page and click Start again."
-            : "Could not load the " + stageName + ": " + msg, "bad");
+    const msg = err && err.i18nKey ? t(err.i18nKey) : err && err.message ? err.message : String(err);
+    setStatus(denied ? "st.denied" : "st.loadFail", denied ? null : { stage: t(stageName), msg }, "bad");
   }
 };
 
-if (DEMO) boot().then(demoLoop).catch(e => setStatus("Demo failed: " + e.message, "bad"));
+if (DEMO) boot().then(demoLoop).catch(e => setStatus("st.demoFail", { msg: e.message }, "bad"));
 </script>
 </body>
 </html>
